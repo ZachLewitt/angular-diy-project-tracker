@@ -1,0 +1,41 @@
+<mat-card>
+  <form class="task-info" [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    <mat-form-field class="task-info__field" appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="Title of the task" formControlName="title" />
+      <mat-icon matSuffix>title</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="task-info__field" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        placeholder="Description of the task"
+        formControlName="description"
+        rows="5"
+      ></textarea>
+      <mat-icon matSuffix>description</mat-icon>
+    </mat-form-field>
+    <p>Steps:</p>
+    <button class="task-info__plus" mat-button (click)="addStep()"><mat-icon>add</mat-icon></button>
+    <div
+      cdkDropList
+      class="example-list"
+      (cdkDropListDropped)="stepDropped($event)"
+    >
+      <div cdkDrag *ngFor="let step of steps.controls; let i = index">
+        <mat-form-field class="task-info__field" appearance="outline">
+          <mat-label>Step {{i + 1}}</mat-label>
+          <input matInput id="step-{{ i }}" type="text" [formControlName]="i" />
+        </mat-form-field>
+      </div>
+    </div>
+    <button
+      class="task-info__button"
+      type="submit"
+      mat-raised-button
+      color="primary"
+    >
+      {{ isCreating ? "Create" : "Update" }}
+    </button>
+  </form>
+</mat-card>
